@@ -38,7 +38,7 @@ const services = [
   ["✓", "General Contractor", "Pelaksanaan proyek konstruksi dari perencanaan hingga penyelesaian."],
   ["✓", "Konstruksi Gedung", "Pembangunan dan renovasi gedung untuk kebutuhan pemerintahan, pendidikan dan komersial."],
   ["✓", "Supplier", "Penyediaan material dan kebutuhan proyek konstruksi dengan kualitas terbaik."],
-  ["�", "Pekerjaan Sipil", "Pekerjaan jalan, irigasi, drainase, dan infrastruktur lainnya."],
+  ["?", "Pekerjaan Sipil", "Pekerjaan jalan, irigasi, drainase, dan infrastruktur lainnya."],
 ];
 
 function App() {
@@ -527,7 +527,7 @@ function App() {
         <div className="container footer-bottom">
 
           <span>
-            � {new Date().getFullYear()} CV. Kiral Miqdad. All rights reserved.
+            ? {new Date().getFullYear()} CV. Kiral Miqdad. All rights reserved.
           </span>
 
           <span>General Contractor &amp; Supplier</span>

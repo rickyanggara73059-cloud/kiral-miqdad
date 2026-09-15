@@ -1,0 +1,484 @@
+.report-page {
+  min-height: 100vh;
+  background: #f4f7f8;
+  color: #092b49;
+}
+
+.report-container {
+  width: min(1180px, calc(100% - 48px));
+  margin: 0 auto;
+  padding: 28px 0 70px;
+}
+
+.report-back {
+  border: 0;
+  background: transparent;
+  color: #567386;
+  font-size: 15px;
+  cursor: pointer;
+  padding: 0;
+  margin-bottom: 28px;
+}
+
+.report-back:hover {
+  color: #00a95c;
+}
+
+.report-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 30px;
+  margin-bottom: 30px;
+}
+
+.report-eyebrow {
+  margin: 0 0 8px;
+  color: #00a95c;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 2px;
+}
+
+.report-header h1 {
+  margin: 0;
+  color: #082b4d;
+  font-size: clamp(32px, 4vw, 48px);
+  line-height: 1;
+}
+
+.report-header p:not(.report-eyebrow) {
+  margin: 14px 0 0;
+  color: #708496;
+  font-size: 16px;
+}
+
+.report-primary-button,
+.report-secondary-button {
+  border: 0;
+  border-radius: 10px;
+  padding: 13px 19px;
+  background: #00a95c;
+  color: white;
+  font-weight: 800;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.report-primary-button:hover,
+.report-secondary-button:hover {
+  background: #008e4d;
+}
+
+.report-primary-button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.report-project-selector {
+  display: grid;
+  grid-template-columns: minmax(0, 1.6fr) minmax(240px, 1fr);
+  gap: 18px;
+  margin-bottom: 18px;
+}
+
+.report-project-selector > div,
+.report-project-info,
+.report-progress-card,
+.report-list-card {
+  background: white;
+  border: 1px solid #e0e7eb;
+  border-radius: 16px;
+}
+
+.report-project-selector > div:first-child {
+  padding: 20px;
+}
+
+.report-project-selector label,
+.report-field label {
+  display: block;
+  margin-bottom: 8px;
+  color: #567386;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.report-project-selector select,
+.report-field input,
+.report-field textarea,
+.report-field select {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid #d9e1e5;
+  border-radius: 9px;
+  background: white;
+  color: #092b49;
+  padding: 12px 13px;
+  font: inherit;
+  outline: none;
+}
+
+.report-project-selector select:focus,
+.report-field input:focus,
+.report-field textarea:focus,
+.report-field select:focus {
+  border-color: #00a95c;
+}
+
+.report-project-info {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.report-project-info span {
+  color: #8293a0;
+  font-size: 12px;
+}
+
+.report-project-info strong {
+  margin-top: 5px;
+  font-size: 20px;
+}
+
+.report-progress-card {
+  padding: 24px;
+  margin-bottom: 10px;
+}
+
+.report-progress-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.report-progress-top div {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+}
+
+.report-progress-top span {
+  color: #708496;
+  font-size: 14px;
+}
+
+.report-progress-top strong {
+  font-size: 30px;
+  color: #00a95c;
+}
+
+.report-progress-track {
+  height: 13px;
+  margin-top: 18px;
+  overflow: hidden;
+  border-radius: 99px;
+  background: #e8eef1;
+}
+
+.report-progress-fill {
+  height: 100%;
+  border-radius: inherit;
+  background: #00a95c;
+  transition: width 0.3s ease;
+}
+
+.report-progress-labels {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 7px;
+  color: #9aa8b1;
+  font-size: 11px;
+}
+
+.report-status {
+  min-height: 20px;
+  margin: 10px 2px 16px;
+  color: #7a8c99;
+  font-size: 13px;
+}
+
+.report-list-card {
+  overflow: hidden;
+}
+
+.report-list-header {
+  padding: 25px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #e7ecef;
+}
+
+.report-list-header h2 {
+  margin: 0;
+  font-size: 23px;
+}
+
+.report-list-header > span {
+  color: #7a8c99;
+  font-size: 13px;
+}
+
+.report-timeline {
+  padding: 10px 25px 30px;
+}
+
+.report-timeline-item {
+  position: relative;
+  display: flex;
+  gap: 18px;
+  padding: 24px 0;
+}
+
+.report-timeline-item:not(:last-child) {
+  border-bottom: 1px solid #edf1f3;
+}
+
+.report-timeline-dot {
+  flex: 0 0 12px;
+  width: 12px;
+  height: 12px;
+  margin-top: 7px;
+  border-radius: 50%;
+  background: #00a95c;
+  box-shadow: 0 0 0 5px #e9f8f1;
+}
+
+.report-item-content {
+  min-width: 0;
+  flex: 1;
+}
+
+.report-item-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.report-item-top h3 {
+  margin: 0;
+  font-size: 18px;
+  color: #092b49;
+}
+
+.report-item-top time {
+  display: block;
+  margin-top: 5px;
+  color: #91a0aa;
+  font-size: 12px;
+}
+
+.report-item-top > strong {
+  color: #00a95c;
+  font-size: 21px;
+}
+
+.report-item-content > p {
+  margin: 12px 0;
+  color: #718493;
+  line-height: 1.6;
+}
+
+.report-item-progress > div {
+  height: 7px;
+  overflow: hidden;
+  border-radius: 99px;
+  background: #e8eef1;
+}
+
+.report-item-progress span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: #00a95c;
+}
+
+.report-item-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 13px;
+}
+
+.report-item-actions button {
+  border: 1px solid #dce4e8;
+  border-radius: 7px;
+  background: white;
+  color: #567386;
+  padding: 7px 11px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.report-item-actions button:hover {
+  border-color: #00a95c;
+  color: #00a95c;
+}
+
+.report-item-actions button.danger:hover {
+  border-color: #d44;
+  color: #d44;
+}
+
+.report-empty {
+  min-height: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 30px;
+  color: #80919d;
+}
+
+.report-empty-icon {
+  width: 52px;
+  height: 52px;
+  display: grid;
+  place-items: center;
+  border-radius: 14px;
+  background: #eaf8f1;
+  color: #00a95c;
+  font-size: 27px;
+  margin-bottom: 14px;
+}
+
+.report-empty h3 {
+  margin: 0;
+  color: #18384f;
+  font-size: 17px;
+}
+
+.report-empty p {
+  margin: 8px 0 18px;
+}
+
+.report-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(4, 25, 43, 0.5);
+}
+
+.report-modal {
+  width: min(560px, 100%);
+  max-height: calc(100vh - 40px);
+  overflow-y: auto;
+  border-radius: 18px;
+  background: white;
+  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.2);
+}
+
+.report-modal-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 24px 25px;
+  border-bottom: 1px solid #e8edef;
+}
+
+.report-modal-header h2 {
+  margin: 0;
+  color: #092b49;
+}
+
+.report-close {
+  width: 35px;
+  height: 35px;
+  border: 0;
+  border-radius: 50%;
+  background: #f2f5f6;
+  color: #5e7381;
+  font-size: 22px;
+  cursor: pointer;
+}
+
+.report-modal form {
+  padding: 25px;
+}
+
+.report-field {
+  margin-bottom: 18px;
+}
+
+.report-field textarea {
+  resize: vertical;
+}
+
+.report-progress-input {
+  position: relative;
+}
+
+.report-progress-input span {
+  position: absolute;
+  right: 13px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #789;
+  font-weight: 700;
+}
+
+.report-progress-input input {
+  padding-right: 35px;
+}
+
+.report-form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 25px;
+}
+
+.report-cancel-button {
+  border: 1px solid #dce4e8;
+  border-radius: 9px;
+  background: white;
+  color: #607786;
+  padding: 12px 18px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+@media (max-width: 760px) {
+  .report-container {
+    width: min(100% - 28px, 1180px);
+    padding-top: 20px;
+  }
+
+  .report-header {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .report-primary-button {
+    width: 100%;
+  }
+
+  .report-project-selector {
+    grid-template-columns: 1fr;
+  }
+
+  .report-item-top {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .report-progress-top {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .report-list-header {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 8px;
+  }
+}

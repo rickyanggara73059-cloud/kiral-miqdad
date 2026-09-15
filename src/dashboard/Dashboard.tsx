@@ -2,13 +2,11 @@ import { supabase } from "../lib/supabase";
 import { useEffect, useState } from "react";
 import "./Dashboard.css";
 import ProjectManagement from "./ProjectManagement";
+import DocumentManagement from "./DocumentManagement";
+import ReportManagement from "./ReportManagement";
 import { getKiralDashboard } from "../lib/kiralApi";
 
 function Dashboard() {
-
-  if (window.location.pathname === "/dashboard/proyek") {
-    return <ProjectManagement />;
-  }
   const [activeMenu, setActiveMenu] = useState("Overview");
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
@@ -49,6 +47,18 @@ function Dashboard() {
     };
   }, []);
 
+  if (window.location.pathname === "/dashboard/proyek") {
+    return <ProjectManagement />;
+  }
+
+  if (window.location.pathname === "/dashboard/dokumen") {
+    return <DocumentManagement />;
+  }
+
+  if (window.location.pathname === "/dashboard/laporan") {
+    return <ReportManagement />;
+  }
+
   const menuItems = [
     { label: "Overview", icon: "⌂" },
     { label: "Proyek", icon: "▣" },
@@ -87,6 +97,11 @@ function Dashboard() {
               onClick={() => {
                 if (item.label === "Proyek") {
                   window.location.href = "/dashboard/proyek";
+                  return;
+                }
+
+                if (item.label === "Dokumen") {
+                  window.location.href = "/dashboard/dokumen";
                   return;
                 }
 
@@ -153,7 +168,7 @@ function Dashboard() {
           <div className="dashboard-user">
 
             <div className="dashboard-notification">
-              ◌
+              ●
               <b>3</b>
             </div>
 
@@ -187,7 +202,12 @@ function Dashboard() {
               </p>
             </div>
 
-            <button className="primary-button">
+            <button
+              className="primary-button"
+              onClick={() => {
+                window.location.href = "/dashboard/proyek?add=1";
+              }}
+            >
               + Tambah Proyek
             </button>
 
@@ -371,7 +391,7 @@ function Dashboard() {
             <div className="quick-grid">
 
               <button onClick={() => setActiveMenu("Proyek")}>
-                <span>＋</span>
+                <span>ï¼‹</span>
                 <div>
                   <strong>Buat Proyek Baru</strong>
                   <small>Tambahkan proyek konstruksi</small>
@@ -410,4 +430,8 @@ function Dashboard() {
 }
 
 export default Dashboard;
+
+
+
+
 

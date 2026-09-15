@@ -871,3 +871,35 @@
 .document-menu button:hover {
   background: #fff2f3;
 }
+
+
+/* PROJECT ACTIONS */
+.pm-project-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.pm-manage-project-button {
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.pm-delete-project-button {
+  border: 1px solid #dc2626;
+  background: transparent;
+  color: #dc2626;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.pm-delete-project-button:hover {
+  background: #dc2626;
+  color: #fff;
+}

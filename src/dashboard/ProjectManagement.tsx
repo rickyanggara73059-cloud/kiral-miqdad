@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import "./ProjectManagement.css";
-import { createKiralProject, deleteKiralDocument, getKiralDocuments, getKiralProjects, uploadKiralDocument } from "../lib/kiralApi";
+import { createKiralProject, deleteKiralDocument, getKiralDocumentUrl, getKiralDocuments, getKiralProjects, uploadKiralDocument, deleteKiralProject } from "../lib/kiralApi";
 
 type Project = {
   id: string;
@@ -18,7 +18,7 @@ type DocumentItem = {
   type: "PDF" | "DOC" | "DOCX";
   size: string;
   date: string;
-  drive_url?: string;
+  storage_path?: string;
 };
 
 const initialProjects: Project[] = [
@@ -134,7 +134,7 @@ function formatKiralDate(value: string): string {
 function ProjectManagement() {
   const [projects, setProjects] = useState(initialProjects);
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
-  const [showAddProject, setShowAddProject] = useState(false);
+  const [showAddProject, setShowAddProject] = useState(() => new URLSearchParams(window.location.search).get("add") === "1");
   const [showUpload, setShowUpload] = useState(false);
   const [openDocumentMenu, setOpenDocumentMenu] = useState<string | null>(null);
   const [search, setSearch] = useState("");
@@ -161,13 +161,13 @@ function ProjectManagement() {
                 type: document.type,
                 size: document.size,
                 date: formatKiralDate(document.date),
-                drive_url: document.drive_url,
+                storage_path: document.storage_path,
               })),
           }))
         );
 
         setApiStatus(
-          `Terhubung — ${projectsData.length} proyek, ${documentsData.length} dokumen dari Google Sheets`
+          `Terhubung — ${projectsData.length} proyek, ${documentsData.length} dokumen dari Supabase`
         );
       })
       .catch((error) => {
@@ -214,7 +214,7 @@ function ProjectManagement() {
       setProjects((current) => [...current, newProject]);
       setNewProjectName("");
       setShowAddProject(false);
-      setApiStatus("Proyek berhasil disimpan ke Google Sheets");
+      setApiStatus("Proyek berhasil disimpan ke Supabase");
     } catch (error) {
       setApiStatus(
         error instanceof Error
@@ -222,27 +222,6 @@ function ProjectManagement() {
           : "Gagal menyimpan proyek ke database."
       );
     }
-  }
-
-  function fileToBase64(file: File): Promise<string> {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-
-      reader.onload = () => {
-        if (typeof reader.result !== "string") {
-          reject(new Error("File tidak dapat dibaca."));
-          return;
-        }
-
-        resolve(reader.result);
-      };
-
-      reader.onerror = () => {
-        reject(new Error("Gagal membaca file."));
-      };
-
-      reader.readAsDataURL(file);
-    });
   }
 
   async function uploadDocument(file: File) {
@@ -256,14 +235,10 @@ function ProjectManagement() {
     }
 
     try {
-      const base64 = await fileToBase64(file);
-
-      const uploadedDocument = await uploadKiralDocument({
-        project_id: selectedProject.id,
-        name: file.name,
-        type: extension as "PDF" | "DOC" | "DOCX",
-        base64,
-      });
+      const uploadedDocument = await uploadKiralDocument(
+        selectedProject.id,
+        file
+      );
 
       const newDocument: DocumentItem = {
         id: uploadedDocument.id,
@@ -271,7 +246,7 @@ function ProjectManagement() {
         type: uploadedDocument.type,
         size: uploadedDocument.size,
         date: uploadedDocument.date,
-        drive_url: uploadedDocument.drive_url,
+        storage_path: uploadedDocument.storage_path,
       };
 
       const updatedProject = {
@@ -305,37 +280,54 @@ function ProjectManagement() {
     setSelectedProject(null);
   }
 
-  function previewDocument(document: DocumentItem) {
-    if (!document.drive_url) {
-      alert("Dokumen ini belum memiliki link Google Drive.");
+  async function previewDocument(document: DocumentItem) {
+    if (!document.storage_path) {
+      alert("Lokasi penyimpanan dokumen tidak tersedia.");
       return;
     }
 
-    window.open(document.drive_url, "_blank", "noopener,noreferrer");
+    try {
+      const url = await getKiralDocumentUrl(document.storage_path);
+
+      window.open(url, "_blank", "noopener,noreferrer");
+    } catch (error) {
+      alert(
+        error instanceof Error
+          ? `Gagal membuka dokumen: ${error.message}`
+          : "Gagal membuka dokumen."
+      );
+    }
   }
 
-  function downloadDocument(document: DocumentItem) {
-    if (!document.drive_url) {
-      alert("Dokumen ini belum memiliki link Google Drive.");
+  async function downloadDocument(document: DocumentItem) {
+    if (!document.storage_path) {
+      alert("Lokasi penyimpanan dokumen tidak tersedia.");
       return;
     }
 
-    const match = document.drive_url.match(/\/d\/([^/]+)/);
+    try {
+      const url = await getKiralDocumentUrl(document.storage_path);
 
-    if (!match) {
-      window.open(document.drive_url, "_blank", "noopener,noreferrer");
-      return;
+      const link = window.document.createElement("a");
+      link.href = url;
+      link.target = "_blank";
+      link.rel = "noopener noreferrer";
+      link.download = document.name;
+
+      window.document.body.appendChild(link);
+      link.click();
+      link.remove();
+    } catch (error) {
+      alert(
+        error instanceof Error
+          ? `Gagal mengunduh dokumen: ${error.message}`
+          : "Gagal mengunduh dokumen."
+      );
     }
-
-    const fileId = match[1];
-    const downloadUrl =
-      `https://drive.google.com/uc?export=download&id=${fileId}`;
-
-    window.open(downloadUrl, "_blank", "noopener,noreferrer");
   }
   async function handleDeleteDocument(document: DocumentItem) {
     const confirmed = window.confirm(
-      `Hapus dokumen "${document.name}"?\n\nFile akan dipindahkan ke Trash Google Drive dan datanya dihapus dari database.`
+      `Hapus dokumen "${document.name}"?\n\nFile akan dihapus dari Supabase Storage dan datanya dihapus dari database.`
     );
 
     if (!confirmed) return;
@@ -370,6 +362,37 @@ function ProjectManagement() {
       );
     }
   }
+
+  async function handleDeleteProject(project: Project) {
+    const confirmed = window.confirm(
+      `Hapus proyek "${project.name}"?\n\n` +
+      "Semua dokumen proyek dan file di Supabase Storage juga akan dihapus. " +
+      "Tindakan ini tidak dapat dibatalkan."
+    );
+
+    if (!confirmed) return;
+
+    try {
+      await deleteKiralProject(project.id);
+
+      setProjects((current) =>
+        current.filter((item) => item.id !== project.id)
+      );
+
+      if (selectedProject?.id === project.id) {
+        setSelectedProject(null);
+      }
+
+      setApiStatus(`Proyek berhasil dihapus: ${project.name}`);
+    } catch (error) {
+      alert(
+        error instanceof Error
+          ? `Gagal menghapus proyek: ${error.message}`
+          : "Gagal menghapus proyek."
+      );
+    }
+  }
+
   return (
     <div className="project-management">
 
@@ -406,14 +429,14 @@ function ProjectManagement() {
                 className="pm-secondary-button"
                 onClick={closeProject}
               >
-                ← Kembali
+                ← Kembali
               </button>
 
               <button
                 className="pm-primary-button"
                 onClick={() => setShowUpload(true)}
               >
-                ↑ Upload Dokumen
+                ←‘ Upload Dokumen
               </button>
             </>
           ) : (
@@ -424,7 +447,7 @@ function ProjectManagement() {
                   window.location.href = "/dashboard";
                 }}
               >
-                ← Kembali ke Dashboard
+                ← Kembali ke Dashboard
               </button>
 
               <button
@@ -454,9 +477,9 @@ function ProjectManagement() {
             <h2>{selectedProject.name}</h2>
 
             <div className="project-meta">
-              <span>● {selectedProject.location}</span>
-              <span>● {selectedProject.status}</span>
-              <span>● {selectedProject.documents.length} Dokumen</span>
+              <span>• {selectedProject.location}</span>
+              <span>• {selectedProject.status}</span>
+              <span>• {selectedProject.documents.length} Dokumen</span>
             </div>
 
             <p>{selectedProject.description}</p>
@@ -485,7 +508,7 @@ function ProjectManagement() {
               <div className="empty-documents">
 
                 <div className="empty-icon">
-                  ↑
+                  ←‘
                 </div>
 
                 <h3>Belum ada dokumen</h3>
@@ -551,7 +574,7 @@ function ProjectManagement() {
                         title="Download"
                         onClick={() => downloadDocument(document)}
                       >
-                        ↓
+                        ←“
                       </button>
 
                       <div className="document-menu-wrapper">
@@ -601,7 +624,7 @@ function ProjectManagement() {
           <div className="pm-toolbar">
 
             <div className="pm-search">
-              <span>⌕</span>
+              <span>&#128269;</span>
 
               <input
                 value={search}
@@ -654,11 +677,21 @@ function ProjectManagement() {
                     <span>Dokumen</span>
                   </div>
 
-                  <button
-                    onClick={() => openProject(project)}
-                  >
-                    Kelola Proyek →
-                  </button>
+                  <div className="pm-project-actions">
+                    <button
+                      className="pm-manage-project-button"
+                      onClick={() => openProject(project)}
+                    >
+                      Kelola Proyek →
+                    </button>
+
+                    <button
+                      className="pm-delete-project-button"
+                      onClick={() => handleDeleteProject(project)}
+                    >
+                      Hapus
+                    </button>
+                  </div>
 
                 </div>
 
@@ -779,7 +812,7 @@ function ProjectManagement() {
             <label className="upload-dropzone">
 
               <span className="upload-large-icon">
-                ↑
+                ←‘
               </span>
 
               <strong>Pilih Dokumen</strong>
@@ -813,5 +846,6 @@ function ProjectManagement() {
 }
 
 export default ProjectManagement;
+
 
 
