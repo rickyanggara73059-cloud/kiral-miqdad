@@ -1,0 +1,276 @@
+﻿import { useState } from "react";
+import "./App.css";
+
+const projects = [
+  {
+    title: "Pembangunan Saluran Irigasi",
+    category: "Infrastruktur",
+    location: "Lombok Tengah, NTB",
+    image:
+      "/images/projects/irigasi.jpg",
+    description:
+      "Pekerjaan pembangunan saluran irigasi untuk mendukung pertanian dan kesejahteraan masyarakat.",
+  },
+  {
+    title: "Renovasi Sekolah",
+    category: "Pendidikan",
+    location: "Lombok Tengah, NTB",
+    image:
+      "/images/projects/sekolah.jpg",
+    description:
+      "Renovasi ruang kelas, perbaikan fasilitas dan peningkatan infrastruktur sekolah.",
+  },
+  {
+    title: "Pembangunan Puskesmas",
+    category: "Kesehatan",
+    location: "Lombok Tengah, NTB",
+    image:
+      "/images/projects/puskesmas.jpg",
+    description:
+      "Pembangunan fasilitas kesehatan untuk mendukung pelayanan kesehatan masyarakat.",
+  },
+];
+
+const services = [
+  ["▦", "General Contractor", "Pelaksanaan proyek konstruksi dari perencanaan hingga penyelesaian."],
+  ["▥", "Konstruksi Gedung", "Pembangunan dan renovasi gedung untuk kebutuhan pemerintahan, pendidikan dan komersial."],
+  ["▰", "Supplier", "Penyediaan material dan kebutuhan proyek konstruksi dengan kualitas terbaik."],
+  ["⌂", "Pekerjaan Sipil", "Pekerjaan jalan, irigasi, drainase, dan infrastruktur lainnya."],
+];
+
+function App() {
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  const closeMenu = () => setMenuOpen(false);
+
+  return (
+    <div className="app">
+
+      <header className="navbar">
+        <div className="container navbar-inner">
+
+          <a href="#beranda" className="brand" onClick={closeMenu}>
+            <img src="/logo/logo-kiral.png" alt="KM" className="brand-logo" />
+
+            <div className="brand-text">
+              <strong>CV. KIRAL MIQDAD</strong>
+              <span>General Contractor &amp; Suplayer</span>
+            </div>
+          </a>
+
+          <button
+            className="menu-button"
+            onClick={() => setMenuOpen(!menuOpen)}
+          >
+            {menuOpen ? "×" : "☰"}
+          </button>
+
+          <nav className={menuOpen ? "nav nav-open" : "nav"}>
+            <a href="#beranda" onClick={closeMenu}>Beranda</a>
+            <a href="#tentang" onClick={closeMenu}>Tentang Kami</a>
+            <a href="#layanan" onClick={closeMenu}>Layanan</a>
+            <a href="#proyek" onClick={closeMenu}>Proyek</a>
+            <a href="#keunggulan" onClick={closeMenu}>Keunggulan</a>
+            <a href="#kontak" onClick={closeMenu}>Kontak</a>
+
+            <a className="nav-cta" href="#kontak" onClick={closeMenu}>
+              ☎ &nbsp; Hubungi Kami
+            </a>
+          </nav>
+
+        </div>
+      </header>
+
+
+      <main>
+
+        <section\ className="hero"\ id="beranda">\n\n\ \ \ \ \ \ \ \ \ \ <div\ className="hero-photo"\ />\n\n\ \ \ \ \ \ \ \ \ \ <div\ className="hero-overlay"\ />\n\n\ \ \ \ \ \ \ \ \ \ <div\ className="container\ hero-content">\n\n\ \ \ \ \ \ \ \ \ \ \ \ <div\ className="hero-left">\n\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ <div\ className="eyebrow">\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <i\ />\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ GENERAL\ CONTRACTOR\ &amp;\ SUPPLIER\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ </div>\n\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ <h1>\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Membangun\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <br\ />\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Dengan\ <span>Kualitas</span>\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <br\ />\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Untuk\ Masa\ Depan\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ </h1>\n\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ <p>\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ CV\.\ Kiral\ Miqdad\ hadir\ sebagai\ mitra\ terpercaya\ dalam\ bidang\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ konstruksi\ dan\ pengadaan,\ dengan\ komitmen\ terhadap\ kualitas,\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ketepatan\ waktu\ dan\ hasil\ yang\ terbaik\.\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ </p>\n\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ <div\ className="hero-buttons">\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <a\ href="\#proyek"\ className="button\ green">\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Lihat\ Proyek\ Kami\ <b>→</b>\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ </a>\n\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <a\ href="\#kontak"\ className="button\ outline">\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ◉\ &nbsp;\ Hubungi\ Kami\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ </a>\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ </div>\n\n\ \ \ \ \ \ \ \ \ \ \ \ </div>\n\n\n\ \ \ \ \ \ \ \ \ \ \ \ <div\ className="trust-card">\n\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ <div\ className="trust-item">\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <div\ className="trust-icon">✓</div>\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <div>\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <strong>Profesional</strong>\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <small>Tenaga\ ahli\ berpengalaman</small>\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ </div>\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ </div>\n\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ <div\ className="trust-item">\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <div\ className="trust-icon">✦</div>\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <div>\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <strong>Berkualitas</strong>\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <small>Mengutamakan\ standar\ mutu</small>\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ </div>\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ </div>\n\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ <div\ className="trust-item">\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <div\ className="trust-icon">◷</div>\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <div>\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <strong>Tepat\ Waktu</strong>\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <small>Sesuai\ jadwal\ yang\ direncanakan</small>\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ </div>\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ </div>\n\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ <div\ className="trust-item">\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <div\ className="trust-icon">♧</div>\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <div>\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <strong>Terpercaya</strong>\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <small>Komitmen\ untuk\ klien</small>\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ </div>\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ </div>\n\n\ \ \ \ \ \ \ \ \ \ \ \ </div>\n\n\ \ \ \ \ \ \ \ \ \ </div>\n\n\ \ \ \ \ \ \ \ \ \ <div\ className="hero-caption">\n\ \ \ \ \ \ \ \ \ \ \ \ Proyek\ Pembangunan\ Saluran\ Irigasi\n\ \ \ \ \ \ \ \ \ \ \ \ <br\ />\n\ \ \ \ \ \ \ \ \ \ \ \ Lombok\ Tengah,\ NTB\n\ \ \ \ \ \ \ \ \ \ </div>\n\n\ \ \ \ \ \ \ \ </section>\n\n\n\ \ \ \ \ \ \ \ <section\ className="services"\ id="layanan">\n\n\ \ \ \ \ \ \ \ \ \ <div\ className="container">\n\n\ \ \ \ \ \ \ \ \ \ \ \ <div\ className="section-heading\ centered">\n\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ <div\ className="section-label">\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <i\ />\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ LAYANAN\ KAMI\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ </div>\n\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ <h2>Solusi\ Konstruksi\ yang\ Lengkap</h2>\n\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ <p>\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Kami\ menyediakan\ berbagai\ layanan\ konstruksi\ dan\ pengadaan\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ untuk\ mendukung\ pembangunan\ infrastruktur\ dan\ fasilitas\ umum\.\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ </p>\n\n\ \ \ \ \ \ \ \ \ \ \ \ </div>\n\n\n\ \ \ \ \ \ \ \ \ \ \ \ <div\ className="services-grid">\n\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ \{services\.map\(\(\[icon,\ title,\ description]\)\ =>\ \(\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <article\ className="service-card"\ key=\{title}>\n\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <div\ className="service-icon">\{icon}</div>\n\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <h3>\{title}</h3>\n\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <p>\{description}</p>\n\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <a\ href="\#kontak">\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Selengkapnya\ <span>→</span>\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ </a>\n\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ </article>\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ \)\)}\n\n\ \ \ \ \ \ \ \ \ \ \ \ </div>\n\n\ \ \ \ \ \ \ \ \ \ </div>\n\n\ \ \ \ \ \ \ \ </section>\n\n\n\ \ \ \ \ \ \ \ <section\ className="projects"\ id="proyek">\n\n\ \ \ \ \ \ \ \ \ \ <div\ className="container">\n\n\ \ \ \ \ \ \ \ \ \ \ \ <div\ className="projects-heading">\n\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ <div>\n\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <div\ className="section-label">\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <i\ />\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PROYEK\ KAMI\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ </div>\n\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <h2>Pengalaman\ dalam\ Berbagai\ Pekerjaan</h2>\n\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <p>\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Berikut\ beberapa\ contoh\ proyek\ yang\ telah\ kami\ kerjakan\.\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ </p>\n\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ </div>\n\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ <a\ href="\#proyek"\ className="view-projects">\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Lihat\ Semua\ Proyek\ →\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ </a>\n\n\ \ \ \ \ \ \ \ \ \ \ \ </div>\n\n\n\ \ \ \ \ \ \ \ \ \ \ \ <div\ className="projects-grid">\n\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ \{projects\.map\(\(project\)\ =>\ \(\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <article\ className="project-card"\ key=\{project\.title}>\n\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <div\ className="project-photo">\n\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <img\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ src=\{project\.image}\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ alt=\{project\.title}\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ />\n\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <span\ className="category">\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{project\.category}\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ </span>\n\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ </div>\n\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <div\ className="project-body">\n\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <h3>\{project\.title}</h3>\n\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <div\ className="location">\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <b>●</b>\ \{project\.location}\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ </div>\n\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <p>\{project\.description}</p>\n\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ </div>\n\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ </article>\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ \)\)}\n\n\ \ \ \ \ \ \ \ \ \ \ \ </div>\n\n\ \ \ \ \ \ \ \ \ \ </div>\n\n\ \ \ \ \ \ \ \ </section>\n\n\n\ \ \ \ \ \ \ \ <section\ className="about"\ id="tentang">\n\n\ \ \ \ \ \ \ \ \ \ <div\ className="container\ about-grid">\n\n\ \ \ \ \ \ \ \ \ \ \ \ <div\ className="about-photo">\n\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ <img\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ src="/images/projects/puskesmas\.jpg"\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ alt="Pekerjaan\ konstruksi"\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ />\n\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ <div\ className="about-badge">\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <strong>KM</strong>\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <span>General\ Contractor</span>\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ </div>\n\n\ \ \ \ \ \ \ \ \ \ \ \ </div>\n\n\n\ \ \ \ \ \ \ \ \ \ \ \ <div\ className="about-text">\n\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ <div\ className="section-label">\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <i\ />\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ TENTANG\ KAMI\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ </div>\n\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ <h2>\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Membangun\ dengan\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <br\ />\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <span>standar\ profesional\.</span>\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ </h2>\n\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ <p>\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ CV\.\ Kiral\ Miqdad\ merupakan\ perusahaan\ General\ Contractor\ &\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Supplier\ yang\ berkomitmen\ memberikan\ solusi\ konstruksi\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ berkualitas\ dan\ dapat\ dipercaya\.\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ </p>\n\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ <p>\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Kami\ mengutamakan\ profesionalisme,\ kualitas\ pekerjaan,\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ketepatan\ pelaksanaan\ dan\ hubungan\ jangka\ panjang\ dengan\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ setiap\ klien\.\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ </p>\n\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ <div\ className="about-points">\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <div>✓\ Tenaga\ profesional\ berpengalaman</div>\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <div>✓\ Mengutamakan\ kualitas\ dan\ keselamatan</div>\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <div>✓\ Komitmen\ terhadap\ ketepatan\ waktu</div>\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ </div>\n\n\ \ \ \ \ \ \ \ \ \ \ \ </div>\n\n\ \ \ \ \ \ \ \ \ \ </div>\n\n\ \ \ \ \ \ \ \ </section>
+
+
+        <section className="why" id="keunggulan">
+
+          <div className="container why-grid">
+
+            <div>
+
+              <div className="section-label white">
+                <i />
+                KENAPA KAMI
+              </div>
+
+              <h2>
+                Dibangun dengan standar.
+                <br />
+                <span>Dijaga dengan komitmen.</span>
+              </h2>
+
+              <p>
+                Setiap proyek kami kerjakan dengan perencanaan, koordinasi
+                dan pengawasan yang baik untuk menghasilkan pekerjaan yang
+                berkualitas.
+              </p>
+
+            </div>
+
+
+            <div className="why-list">
+
+              <div>
+                <b>01</b>
+                <h3>Profesional</h3>
+                <p>Pelaksanaan pekerjaan terencana dan bertanggung jawab.</p>
+              </div>
+
+              <div>
+                <b>02</b>
+                <h3>Kualitas</h3>
+                <p>Mengutamakan standar mutu dalam setiap pekerjaan.</p>
+              </div>
+
+              <div>
+                <b>03</b>
+                <h3>Tepat Waktu</h3>
+                <p>Menjaga target pekerjaan sesuai jadwal.</p>
+              </div>
+
+              <div>
+                <b>04</b>
+                <h3>Terpercaya</h3>
+                <p>Membangun hubungan kerja yang transparan.</p>
+              </div>
+
+            </div>
+
+          </div>
+
+        </section>
+
+
+        <section className="contact" id="kontak">
+
+          <div className="contact-photo" />
+
+          <div className="contact-overlay" />
+
+          <div className="container contact-inner">
+
+            <div>
+
+              <div className="section-label white">
+                <i />
+                HUBUNGI KAMI
+              </div>
+
+              <h2>Siap Membangun Proyek Bersama?</h2>
+
+              <p>
+                Diskusikan kebutuhan konstruksi dan pengadaan proyek Anda
+                bersama tim CV. Kiral Miqdad.
+              </p>
+
+            </div>
+
+            <a
+              href="https://wa.me/6281916056202"
+              target="_blank"
+              rel="noreferrer"
+              className="whatsapp"
+            >
+              ◉ &nbsp; Hubungi Kami Sekarang
+            </a>
+
+          </div>
+
+        </section>
+
+      </main>
+
+
+      <footer className="footer">
+
+        <div className="container footer-grid">
+
+          <div className="footer-company">
+
+            <div className="brand">
+
+              <img src="/logo/logo-kiral.png" alt="KM" className="brand-logo" />
+
+              <div className="brand-text">
+                <strong>CV. KIRAL MIQDAD</strong>
+                <span>General Contractor &amp; Suplayer</span>
+              </div>
+
+            </div>
+
+            <p>
+              Membangun dengan kualitas, ketepatan dan bersama tim
+              CV. Kiral Miqdad.
+            </p>
+
+          </div>
+
+
+          <div className="footer-column">
+
+            <h4>Menu</h4>
+
+            <a href="#beranda">Beranda</a>
+            <a href="#tentang">Tentang Kami</a>
+            <a href="#layanan">Layanan</a>
+            <a href="#proyek">Proyek</a>
+            <a href="#keunggulan">Keunggulan</a>
+            <a href="#kontak">Kontak</a>
+
+          </div>
+
+
+          <div className="footer-column">
+
+            <h4>Kontak</h4>
+
+            <p>☎ &nbsp; +62 819 1605 6202</p>
+            <p>✉ &nbsp; cvkiralmiqdad@gmail.com</p>
+            <p>⌖ &nbsp; Jl. Praya - Mantang - Bidin</p>
+            <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Mertak Tombok - Praya</p>
+            <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Lombok Tengah, NTB</p>
+
+          </div>
+
+
+          <div className="footer-column">
+
+            <h4>Ikuti Kami</h4>
+
+            <div className="social">
+              <span>f</span>
+              <span>◎</span>
+              <span>▶</span>
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <div className="container footer-bottom">
+
+          <span>
+            © {new Date().getFullYear()} CV. Kiral Miqdad. All rights reserved.
+          </span>
+
+          <span>General Contractor &amp; Supplier</span>
+
+        </div>
+
+      </footer>
+
+    </div>
+  );
+}
+
+export default App;
+
+
+
+

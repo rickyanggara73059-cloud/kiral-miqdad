@@ -1,0 +1,62 @@
+const KIRAL_API_URL =
+  "https://script.google.com/macros/s/AKfycbx0B-o7XrthRLKUPJXvbM09JqGF6cYQNCMhVD5bOou50DXvpqev-rTPzSycSMzlUsDY/exec";
+
+export type KiralProject = {
+  id: string;
+  name: string;
+  category: string;
+  location: string;
+  status: string;
+  description: string;
+  created_at: string;
+  updated_at: string;
+};
+
+type ApiResponse<T> = {
+  success: boolean;
+  data?: T;
+  message?: string;
+};
+
+export async function getKiralProjects(): Promise<KiralProject[]> {
+  const response = await fetch(`${KIRAL_API_URL}?action=projects`);
+
+  if (!response.ok) {
+    throw new Error(`API KIRAL gagal: HTTP ${response.status}`);
+  }
+
+  const result: ApiResponse<KiralProject[]> = await response.json();
+
+  if (!result.success) {
+    throw new Error(result.message || "API KIRAL mengembalikan error.");
+  }
+
+  return result.data ?? [];
+}
+
+export type KiralDocument = {
+  id: string;
+  project_id: string;
+  project_name: string;
+  name: string;
+  type: "PDF" | "DOC" | "DOCX";
+  size: string;
+  date: string;
+  drive_url: string;
+};
+
+export async function getKiralDocuments(): Promise<KiralDocument[]> {
+  const response = await fetch(`${KIRAL_API_URL}?action=documents`);
+
+  if (!response.ok) {
+    throw new Error(`API KIRAL gagal: HTTP ${response.status}`);
+  }
+
+  const result: ApiResponse<KiralDocument[]> = await response.json();
+
+  if (!result.success) {
+    throw new Error(result.message || "API KIRAL mengembalikan error.");
+  }
+
+  return result.data ?? [];
+}

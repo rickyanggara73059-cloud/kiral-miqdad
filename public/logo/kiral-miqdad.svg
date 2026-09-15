@@ -1,0 +1,16 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600">
+  <rect width="600" height="600" fill="none"/>
+
+  <!-- KIRI ATAS BIRU -->
+  <path d="M55 180 L145 95 L145 245 L55 330 Z" fill="#0754A4"/>
+
+  <!-- K MERAH -->
+  <path d="M55 180 L145 245 L145 330 L55 415 Z" fill="#E51F2A"/>
+  <path d="M55 330 L145 415 L145 535 L55 450 Z" fill="#E51F2A"/>
+  <path d="M145 245 L430 20 L430 125 L215 300 Z" fill="#E51F2A"/>
+  <path d="M145 330 L430 535 L305 535 L145 415 Z" fill="#E51F2A"/>
+
+  <!-- M BIRU -->
+  <path d="M430 125 L530 55 L530 535 L430 535 Z" fill="#0754A4"/>
+  <path d="M215 300 L430 125 L430 205 L250 350 Z" fill="#0754A4"/>
+</svg>

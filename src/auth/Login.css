@@ -1,0 +1,143 @@
+.login-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 20px;
+  background:
+    linear-gradient(135deg, rgba(6, 44, 81, 0.97), rgba(4, 170, 88, 0.82)),
+    url("/images/hero-irigasi.jpg") center/cover;
+}
+
+.login-card {
+  width: min(100%, 440px);
+  padding: 42px;
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.98);
+  box-shadow: 0 28px 70px rgba(0, 0, 0, 0.25);
+}
+
+.login-brand {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 28px;
+}
+
+.login-brand img {
+  width: 220px;
+  max-width: 80%;
+  height: auto;
+  object-fit: contain;
+}
+
+.login-heading {
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.login-heading span {
+  color: #04aa58;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+}
+
+.login-heading h1 {
+  margin: 8px 0 6px;
+  color: #062c51;
+  font-size: 2rem;
+}
+
+.login-heading p {
+  margin: 0;
+  color: #64748b;
+  font-size: 0.92rem;
+}
+
+.login-form {
+  display: grid;
+  gap: 18px;
+}
+
+.login-form label {
+  display: grid;
+  gap: 8px;
+  color: #183b5b;
+  font-size: 0.86rem;
+  font-weight: 700;
+}
+
+.login-form input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 13px 14px;
+  border: 1px solid #d8e0e8;
+  border-radius: 10px;
+  outline: none;
+  color: #183b5b;
+  background: #fff;
+  font: inherit;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.login-form input:focus {
+  border-color: #04aa58;
+  box-shadow: 0 0 0 3px rgba(4, 170, 88, 0.12);
+}
+
+.login-form button {
+  margin-top: 4px;
+  border: 0;
+  border-radius: 10px;
+  padding: 14px 18px;
+  background: #062c51;
+  color: #fff;
+  font: inherit;
+  font-weight: 800;
+  cursor: pointer;
+  transition: transform 0.2s, opacity 0.2s;
+}
+
+.login-form button:hover:not(:disabled) {
+  transform: translateY(-1px);
+  opacity: 0.94;
+}
+
+.login-form button:disabled {
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+.login-error {
+  padding: 11px 13px;
+  border-radius: 9px;
+  background: #fff1f2;
+  color: #be123c;
+  font-size: 0.84rem;
+  line-height: 1.5;
+}
+
+.login-back {
+  display: block;
+  margin-top: 24px;
+  text-align: center;
+  color: #64748b;
+  font-size: 0.86rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.login-back:hover {
+  color: #04aa58;
+}
+
+@media (max-width: 520px) {
+  .login-card {
+    padding: 30px 22px;
+    border-radius: 20px;
+  }
+
+  .login-heading h1 {
+    font-size: 1.7rem;
+  }
+}

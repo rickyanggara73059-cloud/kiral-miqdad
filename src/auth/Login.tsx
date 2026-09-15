@@ -1,0 +1,92 @@
+import { useState } from "react";
+import type { FormEvent } from "react";
+import { supabase } from "../lib/supabase";
+import "./Login.css";
+
+const KIRAL_EMAIL = "kiral.admin@gmail.com";
+
+export default function Login() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+
+  async function handleLogin(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setError("");
+
+    if (email.trim().toLowerCase() !== KIRAL_EMAIL) {
+      setError("Akun ini tidak memiliki akses ke Dashboard KIRAL.");
+      return;
+    }
+
+    setLoading(true);
+
+    const { error: loginError } = await supabase.auth.signInWithPassword({
+      email: email.trim(),
+      password,
+    });
+
+    if (loginError) {
+      setError(`Supabase: ${loginError.message}`);
+      setLoading(false);
+      return;
+    }
+
+    window.location.href = "/dashboard";
+  }
+
+  return (
+    <main className="login-page">
+      <div className="login-card">
+        <div className="login-brand">
+          <img src="/logo/logo-kiral.png" alt="CV. KIRAL MIQDAD" />
+        </div>
+
+        <div className="login-heading">
+          <span>ADMINISTRATOR</span>
+          <h1>Selamat Datang</h1>
+          <p>Masuk ke Dashboard CV. KIRAL MIQDAD</p>
+        </div>
+
+        <form onSubmit={handleLogin} className="login-form">
+          <label>
+            Email
+            <input
+              type="email"
+              value={email}
+              onChange={(event) => setEmail(event.target.value)}
+              placeholder="Email administrator"
+              autoComplete="email"
+              required
+            />
+          </label>
+
+          <label>
+            Password
+            <input
+              type="password"
+              value={password}
+              onChange={(event) => setPassword(event.target.value)}
+              placeholder="Masukkan password"
+              autoComplete="current-password"
+              required
+            />
+          </label>
+
+          {error && <div className="login-error">{error}</div>}
+
+          <button type="submit" disabled={loading}>
+            {loading ? "Memproses..." : "Masuk ke Dashboard"}
+          </button>
+        </form>
+
+        <a href="/" className="login-back">
+          ? Kembali ke Website
+        </a>
+      </div>
+    </main>
+  );
+}
+
+

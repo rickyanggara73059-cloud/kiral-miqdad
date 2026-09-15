@@ -1,0 +1,592 @@
+﻿import { useState } from "react";
+import "./ProjectManagement.css";
+
+type Project = {
+  id: number;
+  name: string;
+  category: string;
+  location: string;
+  status: string;
+  description: string;
+  documents: DocumentItem[];
+};
+
+type DocumentItem = {
+  id: number;
+  name: string;
+  type: "PDF" | "DOC" | "DOCX";
+  size: string;
+  date: string;
+};
+
+const initialProjects: Project[] = [
+  {
+    id: 1,
+    name: "Pembangunan Saluran Irigasi",
+    category: "Infrastruktur",
+    location: "Lombok Tengah, NTB",
+    status: "Berjalan",
+    description:
+      "Pembangunan saluran irigasi untuk mendukung kebutuhan pertanian dan infrastruktur pengairan masyarakat.",
+    documents: [
+      {
+        id: 1,
+        name: "Kontrak Pembangunan Irigasi.pdf",
+        type: "PDF",
+        size: "2.4 MB",
+        date: "11 Sep 2026",
+      },
+      {
+        id: 2,
+        name: "Gambar Kerja Irigasi.pdf",
+        type: "PDF",
+        size: "5.8 MB",
+        date: "08 Sep 2026",
+      },
+      {
+        id: 3,
+        name: "Laporan Progres Irigasi.docx",
+        type: "DOCX",
+        size: "1.2 MB",
+        date: "07 Sep 2026",
+      },
+    ],
+  },
+  {
+    id: 2,
+    name: "Renovasi Sekolah",
+    category: "Pendidikan",
+    location: "Lombok Tengah, NTB",
+    status: "Berjalan",
+    description:
+      "Renovasi ruang kelas, fasilitas sekolah dan peningkatan kualitas bangunan pendidikan.",
+    documents: [
+      {
+        id: 4,
+        name: "Kontrak Renovasi Sekolah.pdf",
+        type: "PDF",
+        size: "2.1 MB",
+        date: "10 Sep 2026",
+      },
+      {
+        id: 5,
+        name: "RAB Renovasi Sekolah.docx",
+        type: "DOCX",
+        size: "980 KB",
+        date: "10 Sep 2026",
+      },
+    ],
+  },
+  {
+    id: 3,
+    name: "Pembangunan Puskesmas",
+    category: "Kesehatan",
+    location: "Lombok Tengah, NTB",
+    status: "Berjalan",
+    description:
+      "Pembangunan fasilitas kesehatan untuk meningkatkan pelayanan kesehatan masyarakat.",
+    documents: [
+      {
+        id: 6,
+        name: "Kontrak Puskesmas.pdf",
+        type: "PDF",
+        size: "3.1 MB",
+        date: "09 Sep 2026",
+      },
+      {
+        id: 7,
+        name: "Laporan Progres Puskesmas.docx",
+        type: "DOCX",
+        size: "1.4 MB",
+        date: "09 Sep 2026",
+      },
+      {
+        id: 8,
+        name: "Gambar Kerja Puskesmas.pdf",
+        type: "PDF",
+        size: "7.2 MB",
+        date: "08 Sep 2026",
+      },
+    ],
+  },
+];
+
+function ProjectManagement() {
+  const [projects, setProjects] = useState(initialProjects);
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+  const [showAddProject, setShowAddProject] = useState(false);
+  const [showUpload, setShowUpload] = useState(false);
+  const [search, setSearch] = useState("");
+
+  const [newProjectName, setNewProjectName] = useState("");
+  const [newProjectCategory, setNewProjectCategory] =
+    useState("Infrastruktur");
+
+  const filteredProjects = projects.filter((project) =>
+    `${project.name} ${project.category} ${project.location}`
+      .toLowerCase()
+      .includes(search.toLowerCase())
+  );
+
+  function addProject() {
+    if (!newProjectName.trim()) return;
+
+    const newProject: Project = {
+      id: Date.now(),
+      name: newProjectName,
+      category: newProjectCategory,
+      location: "Lombok Tengah, NTB",
+      status: "Berjalan",
+      description:
+        "Proyek konstruksi CV. Kiral Miqdad.",
+      documents: [],
+    };
+
+    setProjects((current) => [...current, newProject]);
+    setNewProjectName("");
+    setShowAddProject(false);
+  }
+
+  function uploadDocument(file: File) {
+    if (!selectedProject) return;
+
+    const extension = file.name.split(".").pop()?.toUpperCase();
+
+    if (!["PDF", "DOC", "DOCX"].includes(extension || "")) {
+      alert("Format yang diperbolehkan hanya PDF, DOC dan DOCX.");
+      return;
+    }
+
+    const newDocument: DocumentItem = {
+      id: Date.now(),
+      name: file.name,
+      type: extension as "PDF" | "DOC" | "DOCX",
+      size: `${Math.max(file.size / 1024 / 1024, 0.01).toFixed(2)} MB`,
+      date: new Date().toLocaleDateString("id-ID", {
+        day: "2-digit",
+        month: "short",
+        year: "numeric",
+      }),
+    };
+
+    const updatedProject = {
+      ...selectedProject,
+      documents: [newDocument, ...selectedProject.documents],
+    };
+
+    setProjects((current) =>
+      current.map((project) =>
+        project.id === selectedProject.id ? updatedProject : project
+      )
+    );
+
+    setSelectedProject(updatedProject);
+    setShowUpload(false);
+  }
+
+  function openProject(project: Project) {
+    setSelectedProject(project);
+  }
+
+  function closeProject() {
+    setSelectedProject(null);
+  }
+
+  return (
+    <div className="project-management">
+
+      {/* TOP HEADER */}
+      <div className="pm-header">
+
+        <div>
+          <span className="pm-eyebrow">PROJECT MANAGEMENT</span>
+
+          <h1>
+            {selectedProject
+              ? selectedProject.name
+              : "Daftar Proyek"}
+          </h1>
+
+          <p>
+            {selectedProject
+              ? "Kelola informasi dan seluruh dokumen proyek."
+              : "Kelola seluruh proyek konstruksi CV. Kiral Miqdad."}
+          </p>
+        </div>
+
+        <div className="pm-header-actions">
+
+          {selectedProject ? (
+            <>
+              <button
+                className="pm-secondary-button"
+                onClick={closeProject}
+              >
+                ← Kembali
+              </button>
+
+              <button
+                className="pm-primary-button"
+                onClick={() => setShowUpload(true)}
+              >
+                ↑ Upload Dokumen
+              </button>
+            </>
+          ) : (
+            <button
+              className="pm-primary-button"
+              onClick={() => setShowAddProject(true)}
+            >
+              + Tambah Proyek
+            </button>
+          )}
+
+        </div>
+      </div>
+
+
+      {/* PROJECT DETAIL */}
+      {selectedProject ? (
+
+        <div className="project-detail">
+
+          <div className="project-detail-info">
+
+            <div className={`project-category ${selectedProject.category.toLowerCase()}`}>
+              {selectedProject.category}
+            </div>
+
+            <h2>{selectedProject.name}</h2>
+
+            <div className="project-meta">
+              <span>● {selectedProject.location}</span>
+              <span>● {selectedProject.status}</span>
+              <span>● {selectedProject.documents.length} Dokumen</span>
+            </div>
+
+            <p>{selectedProject.description}</p>
+
+          </div>
+
+
+          <div className="document-section">
+
+            <div className="document-section-header">
+
+              <div>
+                <span className="pm-eyebrow">DOCUMENT MANAGEMENT</span>
+                <h2>Dokumen Proyek</h2>
+              </div>
+
+              <span className="document-count">
+                {selectedProject.documents.length} file
+              </span>
+
+            </div>
+
+
+            {selectedProject.documents.length === 0 ? (
+
+              <div className="empty-documents">
+
+                <div className="empty-icon">
+                  ↑
+                </div>
+
+                <h3>Belum ada dokumen</h3>
+
+                <p>
+                  Upload kontrak, RAB, gambar kerja,
+                  laporan atau dokumen proyek lainnya.
+                </p>
+
+                <button
+                  className="pm-primary-button"
+                  onClick={() => setShowUpload(true)}
+                >
+                  Upload Dokumen
+                </button>
+
+              </div>
+
+            ) : (
+
+              <div className="document-table">
+
+                <div className="document-table-head">
+                  <span>Dokumen</span>
+                  <span>Ukuran</span>
+                  <span>Tanggal</span>
+                  <span></span>
+                </div>
+
+                {selectedProject.documents.map((document) => (
+
+                  <div
+                    className="document-table-row"
+                    key={document.id}
+                  >
+
+                    <div className="document-name">
+
+                      <div className={`document-file-icon ${document.type.toLowerCase()}`}>
+                        {document.type}
+                      </div>
+
+                      <div>
+                        <strong>{document.name}</strong>
+                        <span>{document.type} Document</span>
+                      </div>
+
+                    </div>
+
+                    <span>{document.size}</span>
+
+                    <span>{document.date}</span>
+
+                    <div className="document-actions">
+                      <button title="Preview">
+                        👁
+                      </button>
+
+                      <button title="Download">
+                        ↓
+                      </button>
+
+                      <button title="Menu">
+                        ⋮
+                      </button>
+                    </div>
+
+                  </div>
+
+                ))}
+
+              </div>
+
+            )}
+
+          </div>
+
+        </div>
+
+      ) : (
+
+        <>
+          {/* SEARCH */}
+          <div className="pm-toolbar">
+
+            <div className="pm-search">
+              <span>⌕</span>
+
+              <input
+                value={search}
+                onChange={(event) => setSearch(event.target.value)}
+                placeholder="Cari proyek..."
+              />
+            </div>
+
+            <div className="pm-summary">
+              {projects.length} Proyek Terdaftar
+            </div>
+
+          </div>
+
+
+          {/* PROJECT CARDS */}
+          <div className="project-management-grid">
+
+            {filteredProjects.map((project, index) => (
+
+              <article
+                className="pm-project-card"
+                key={project.id}
+              >
+
+                <div className="pm-project-top">
+
+                  <div className={`pm-project-number project-color-${index + 1}`}>
+                    {String(index + 1).padStart(2, "0")}
+                  </div>
+
+                  <span className="pm-status">
+                    {project.status}
+                  </span>
+
+                </div>
+
+                <span className="pm-project-category">
+                  {project.category}
+                </span>
+
+                <h2>{project.name}</h2>
+
+                <p>{project.location}</p>
+
+                <div className="pm-project-footer">
+
+                  <div>
+                    <strong>{project.documents.length}</strong>
+                    <span>Dokumen</span>
+                  </div>
+
+                  <button
+                    onClick={() => openProject(project)}
+                  >
+                    Kelola Proyek →
+                  </button>
+
+                </div>
+
+              </article>
+
+            ))}
+
+          </div>
+        </>
+
+      )}
+
+
+      {/* ADD PROJECT MODAL */}
+      {showAddProject && (
+
+        <div
+          className="pm-modal-backdrop"
+          onClick={() => setShowAddProject(false)}
+        >
+
+          <div
+            className="pm-modal"
+            onClick={(event) => event.stopPropagation()}
+          >
+
+            <div className="pm-modal-header">
+              <div>
+                <span className="pm-eyebrow">PROJECT MANAGEMENT</span>
+                <h2>Tambah Proyek</h2>
+              </div>
+
+              <button onClick={() => setShowAddProject(false)}>
+                ×
+              </button>
+            </div>
+
+            <label>
+              Nama Proyek
+              <input
+                value={newProjectName}
+                onChange={(event) =>
+                  setNewProjectName(event.target.value)
+                }
+                placeholder="Contoh: Pembangunan Jalan Desa"
+              />
+            </label>
+
+            <label>
+              Kategori
+              <select
+                value={newProjectCategory}
+                onChange={(event) =>
+                  setNewProjectCategory(event.target.value)
+                }
+              >
+                <option>Infrastruktur</option>
+                <option>Pendidikan</option>
+                <option>Kesehatan</option>
+                <option>Gedung</option>
+                <option>Lainnya</option>
+              </select>
+            </label>
+
+            <div className="pm-modal-actions">
+
+              <button
+                className="pm-secondary-button"
+                onClick={() => setShowAddProject(false)}
+              >
+                Batal
+              </button>
+
+              <button
+                className="pm-primary-button"
+                onClick={addProject}
+              >
+                Simpan Proyek
+              </button>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      )}
+
+
+      {/* UPLOAD MODAL */}
+      {showUpload && (
+
+        <div
+          className="pm-modal-backdrop"
+          onClick={() => setShowUpload(false)}
+        >
+
+          <div
+            className="pm-modal upload-modal"
+            onClick={(event) => event.stopPropagation()}
+          >
+
+            <div className="pm-modal-header">
+              <div>
+                <span className="pm-eyebrow">DOCUMENT MANAGEMENT</span>
+                <h2>Upload Dokumen</h2>
+              </div>
+
+              <button onClick={() => setShowUpload(false)}>
+                ×
+              </button>
+            </div>
+
+            <p className="upload-project-name">
+              {selectedProject?.name}
+            </p>
+
+            <label className="upload-dropzone">
+
+              <span className="upload-large-icon">
+                ↑
+              </span>
+
+              <strong>Pilih Dokumen</strong>
+
+              <small>
+                PDF, DOC atau DOCX
+              </small>
+
+              <input
+                type="file"
+                accept=".pdf,.doc,.docx"
+                onChange={(event) => {
+                  const file = event.target.files?.[0];
+
+                  if (file) {
+                    uploadDocument(file);
+                  }
+                }}
+              />
+
+            </label>
+
+          </div>
+
+        </div>
+
+      )}
+
+    </div>
+  );
+}
+
+export default ProjectManagement;
+

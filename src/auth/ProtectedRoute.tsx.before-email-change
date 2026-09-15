@@ -1,0 +1,75 @@
+import { useEffect, useState } from "react";
+import type { ReactNode } from "react";
+import { supabase } from "../lib/supabase";
+
+const KIRAL_EMAIL = "cvkiralmiqdad@gmail.com";
+
+type ProtectedRouteProps = {
+  children: ReactNode;
+};
+
+export default function ProtectedRoute({ children }: ProtectedRouteProps) {
+  const [checking, setChecking] = useState(true);
+  const [allowed, setAllowed] = useState(false);
+
+  useEffect(() => {
+    let mounted = true;
+
+    async function checkAccess() {
+      const { data } = await supabase.auth.getSession();
+      const user = data.session?.user;
+
+      if (!user) {
+        window.location.replace("/login");
+        return;
+      }
+
+      if (user.email?.toLowerCase() !== KIRAL_EMAIL) {
+        await supabase.auth.signOut();
+        window.location.replace("/login");
+        return;
+      }
+
+      if (mounted) {
+        setAllowed(true);
+        setChecking(false);
+      }
+    }
+
+    checkAccess();
+
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((event, session) => {
+      if (event === "SIGNED_OUT" || !session) {
+        window.location.replace("/login");
+      }
+    });
+
+    return () => {
+      mounted = false;
+      subscription.unsubscribe();
+    };
+  }, []);
+
+  if (checking) {
+    return (
+      <div
+        style={{
+          minHeight: "100vh",
+          display: "grid",
+          placeItems: "center",
+          background: "#062c51",
+          color: "#fff",
+          fontFamily: "Arial, sans-serif",
+        }}
+      >
+        Memeriksa akses...
+      </div>
+    );
+  }
+
+  return allowed ? <>{children}</> : null;
+}
+
+
