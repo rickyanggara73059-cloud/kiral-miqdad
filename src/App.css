@@ -1,4 +1,4 @@
-﻿:root {
+:root {
   --green: #04aa58;
   --green-dark: #078447;
   --blue: #08498f;
@@ -1461,4 +1461,318 @@ section {
   .footer-grid {
     padding-bottom: 40px;
   }
+}
+
+/* ============================================================
+   PREMIUM SERVICES
+   ============================================================ */
+
+.premium-services-grid {
+  align-items: start;
+}
+
+.premium-service-card {
+  overflow: hidden;
+  border: 1px solid rgba(15, 45, 70, 0.10);
+  background:
+    linear-gradient(145deg, #ffffff 0%, #fbfefd 100%);
+  box-shadow: 0 12px 30px rgba(15, 45, 70, 0.06);
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    border-color 0.25s ease;
+}
+
+.premium-service-card::before {
+  height: 4px;
+  background: linear-gradient(90deg, #04aa58, #0f2d46);
+}
+
+.premium-service-card:hover,
+.premium-service-card.is-open {
+  transform: translateY(-8px);
+  border-color: rgba(4, 170, 88, 0.32);
+  box-shadow: 0 22px 48px rgba(15, 45, 70, 0.12);
+}
+
+.service-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+
+.premium-service-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 15px;
+  color: #04aa58;
+  background: #ecfaf3;
+  font-size: 26px;
+  font-weight: 700;
+  box-shadow: inset 0 0 0 1px rgba(4, 170, 88, 0.08);
+}
+
+.service-number {
+  color: rgba(15, 45, 70, 0.28);
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+}
+
+.premium-service-card h3 {
+  font-size: 20px;
+  letter-spacing: -0.02em;
+}
+
+.premium-service-card > p {
+  color: #61758a;
+  line-height: 1.75;
+}
+
+.service-detail-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  width: 100%;
+  margin-top: 22px;
+  padding: 12px 15px;
+  border: 1px solid rgba(4, 170, 88, 0.18);
+  border-radius: 12px;
+  background: #f1fbf6;
+  color: #087a43;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 800;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.service-detail-button:hover {
+  background: #04aa58;
+  color: #fff;
+  border-color: #04aa58;
+}
+
+.service-detail-button span {
+  font-size: 19px;
+  line-height: 1;
+}
+
+.service-detail {
+  margin-top: 16px;
+  padding-top: 17px;
+  border-top: 1px solid rgba(15, 45, 70, 0.08);
+  animation: serviceDetailIn 0.22s ease both;
+}
+
+.service-detail-label {
+  margin-bottom: 11px;
+  color: #0f2d46;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.service-detail ul {
+  display: grid;
+  gap: 9px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.service-detail li {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  color: #5f7387;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.service-detail li span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 19px;
+  width: 19px;
+  height: 19px;
+  border-radius: 50%;
+  background: #e8f8f0;
+  color: #04aa58;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.service-detail a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 17px;
+  color: #0f2d46;
+  font-size: 13px;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.service-detail a:hover {
+  color: #04aa58;
+}
+
+@keyframes serviceDetailIn {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 760px) {
+  .premium-service-card {
+    padding: 22px;
+  }
+
+  .premium-service-card:hover,
+  .premium-service-card.is-open {
+    transform: translateY(-4px);
+  }
+
+  .premium-service-card h3 {
+    font-size: 19px;
+  }
+}
+/* ============================================================
+   SERVICE DETAIL - FINAL OVERRIDE
+   ============================================================ */
+
+.service-card .service-detail-button {
+  appearance: none;
+  -webkit-appearance: none;
+  display: flex !important;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  box-sizing: border-box;
+  margin-top: 22px;
+  padding: 12px 15px;
+  border: 1px solid rgba(4, 170, 88, 0.20) !important;
+  border-radius: 12px;
+  background: #f1fbf6 !important;
+  color: #087a43 !important;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 800;
+  line-height: 1.2;
+  text-align: left;
+  cursor: pointer;
+}
+
+.service-card .service-detail-button:hover {
+  background: #04aa58 !important;
+  color: #ffffff !important;
+  border-color: #04aa58 !important;
+}
+
+.service-card .service-detail-button span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.service-card .service-detail {
+  display: block !important;
+  margin-top: 16px;
+  padding-top: 17px;
+  border-top: 1px solid rgba(15, 45, 70, 0.08);
+}
+
+.service-card .service-detail-label {
+  display: block !important;
+  margin-bottom: 12px;
+  color: #0f2d46 !important;
+  font-size: 12px;
+  font-weight: 800;
+  line-height: 1.3;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.service-card .service-detail ul {
+  display: flex !important;
+  flex-direction: column;
+  gap: 9px;
+  margin: 0 !important;
+  padding: 0 !important;
+  list-style: none !important;
+}
+
+.service-card .service-detail li {
+  display: flex !important;
+  align-items: flex-start;
+  gap: 9px;
+  margin: 0;
+  padding: 0;
+  color: #5f7387 !important;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.service-card .service-detail li::before {
+  content: none !important;
+}
+
+.service-card .service-detail li span {
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 19px;
+  width: 19px;
+  height: 19px;
+  margin-top: 1px;
+  border-radius: 50%;
+  background: #e8f8f0 !important;
+  color: #04aa58 !important;
+  font-size: 11px;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.service-card .service-detail a {
+  display: inline-flex !important;
+  align-items: center;
+  gap: 8px;
+  margin-top: 17px;
+  color: #0f2d46 !important;
+  font-size: 13px;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.service-card .service-detail a span {
+  display: inline !important;
+  width: auto;
+  height: auto;
+  background: none !important;
+  color: inherit !important;
+  border-radius: 0;
+  font-size: inherit;
+}
+
+.service-card .service-detail a:hover {
+  color: #04aa58 !important;
 }
