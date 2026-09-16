@@ -391,7 +391,7 @@ function Dashboard() {
             <div className="quick-grid">
 
               <button onClick={() => setActiveMenu("Proyek")}>
-                <span>ï¼‹</span>
+                <span>+</span>
                 <div>
                   <strong>Buat Proyek Baru</strong>
                   <small>Tambahkan proyek konstruksi</small>
