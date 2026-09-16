@@ -35,14 +35,80 @@ const projects = [
 ];
 
 const services = [
-  ["✓", "General Contractor", "Pelaksanaan proyek konstruksi dari perencanaan hingga penyelesaian."],
-  ["✓", "Konstruksi Gedung", "Pembangunan dan renovasi gedung untuk kebutuhan pemerintahan, pendidikan dan komersial."],
-  ["✓", "Supplier", "Penyediaan material dan kebutuhan proyek konstruksi dengan kualitas terbaik."],
-  ["?", "Pekerjaan Sipil", "Pekerjaan jalan, irigasi, drainase, dan infrastruktur lainnya."],
+  {
+    icon: "+",
+    title: "General Contractor",
+    description:
+      "Pelaksanaan proyek konstruksi dari persiapan hingga penyelesaian dengan pengelolaan pekerjaan yang terarah.",
+    details: [
+      "Pekerjaan konstruksi umum",
+      "Persiapan dan pelaksanaan proyek",
+      "Koordinasi tenaga dan pekerjaan",
+      "Pengawasan kualitas pekerjaan",
+    ],
+  },
+  {
+    icon: "+",
+    title: "Renovasi & Perbaikan",
+    description:
+      "Renovasi dan perbaikan bangunan untuk meningkatkan fungsi, kenyamanan, dan kondisi bangunan.",
+    details: [
+      "Renovasi rumah dan bangunan",
+      "Perbaikan ruang dan fasilitas",
+      "Perbaikan struktur dan finishing",
+      "Pekerjaan pemeliharaan bangunan",
+    ],
+  },
+  {
+    icon: "+",
+    title: "Supplier Material",
+    description:
+      "Penyediaan material dan kebutuhan proyek konstruksi dengan pilihan material yang sesuai kebutuhan.",
+    details: [
+      "Pengadaan material konstruksi",
+      "Material sesuai kebutuhan proyek",
+      "Koordinasi kebutuhan dan pengiriman",
+      "Penyesuaian dengan anggaran proyek",
+    ],
+  },
+  {
+    icon: "+",
+    title: "Pekerjaan Sipil",
+    description:
+      "Pekerjaan sipil untuk mendukung pembangunan lingkungan, fasilitas, dan infrastruktur skala kecil hingga menengah.",
+    details: [
+      "Pekerjaan pondasi",
+      "Drainase dan saluran",
+      "Pekerjaan jalan dan halaman",
+      "Pekerjaan sipil lainnya",
+    ],
+  },
 ];
 
+function ServiceIcon({ type }: { type: string }) {
+  const icons: Record<string, string> = {
+    contractor: "🏗️",
+    renovasi: "🔧",
+    supplier: "📦",
+    sipil: "🛣️",
+  };
+
+  return (
+    <span
+      role="img"
+      aria-label="Ikon layanan"
+      style={{
+        fontSize: "24px",
+        lineHeight: 1,
+      }}
+    >
+      {icons[type] ?? "🏗️"}
+    </span>
+  );
+}
 function App() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [selectedService, setSelectedService] = useState<string | null>(null);
 
   if (window.location.pathname === "/login") {
     return <Login />;
@@ -208,24 +274,67 @@ function App() {
             </div>
 
 
-            <div className="services-grid">
+            <div className="services-grid premium-services-grid">
+              {services.map((service) => {
+                const isOpen = selectedService === service.title;
 
-              {services.map(([icon, title, description]) => (
-                <article className="service-card" key={title}>
+                return (
+                  <article
+                    className={`service-card premium-service-card ${isOpen ? "is-open" : ""}`}
+                    key={service.title}
+                  >
+                    <div className="service-card-top">
+                      <div className="service-icon premium-service-icon">
+                        <ServiceIcon type={service.icon} />
+                      </div>
 
-                  <div className="service-icon">{icon}</div>
+                      <span className="service-number">
+                        {String(services.indexOf(service) + 1).padStart(2, "0")}
+                      </span>
+                    </div>
 
-                  <h3>{title}</h3>
+                    <h3>{service.title}</h3>
+                    <p>{service.description}</p>
 
-                  <p>{description}</p>
+                    <button
+                      type="button"
+                      className="service-detail-button"
+                      onClick={() =>
+                        setSelectedService(isOpen ? null : service.title)
+                      }
+                      aria-expanded={isOpen}
+                    >
+                      {isOpen ? "Tutup Detail" : "Selengkapnya"}
+                      <span>{isOpen ? "-" : "+"}</span>
+                    </button>
 
-                  <a href="\#kontak">
-                    Selengkapnya →
-                  </a>
+                    {isOpen && (
+                      <div className="service-detail">
+                        <div className="service-detail-label">
+                          Ruang Lingkup
+                        </div>
 
-                </article>
-              ))}
+                        <ul>
+                          {service.details.map((detail) => (
+                            <li key={detail}>
+                              <span>+</span>
+                              {detail}
+                            </li>
+                          ))}
+                        </ul>
 
+                        <a
+                          href="#kontak"
+                          onClick={() => setSelectedService(null)}
+                        >
+                          Konsultasikan Proyek
+                          <span>+</span>
+                        </a>
+                      </div>
+                    )}
+                  </article>
+                );
+              })}
             </div>
 
           </div>
